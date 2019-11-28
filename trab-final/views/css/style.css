@@ -1,0 +1,453 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script&display=swap');
+
+
+body {
+    font-family: 'Muli';
+}
+
+.wrapper {
+    top: 0; 
+    left: 0;
+    /* background-color: #30D8CB; */
+    background-image: url('bg2.jpg');
+    width: 100%;
+    z-index: -1;
+    padding-bottom: 20px;
+    position: fixed; 
+    height: 100%;
+    font-family: 'Muli';
+}
+
+.header {
+    margin: 0 auto;
+    height: 56px;
+    width: 100%;
+    display: flex;
+    z-index: 100;
+    position: fixed;
+    justify-content: space-between !important;
+    align-items: center;
+    background-color: white;
+    border-bottom: 1px solid black;
+}
+#root {
+    position: relative !important;
+    z-index: -1 !important;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+.links button {
+    margin-right: 5px;
+}
+
+
+.title {
+    margin-left: 10px;
+    font-size: 25px;
+    font-family: 'Dancing Script';
+}
+
+.links {
+    margin-right: 10px;
+}
+
+.titleReceita {
+    margin-top: 100px;
+    text-align: center;
+    margin-bottom: -50px;;
+}
+
+
+.containerLogin {
+    background-color: white;
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 13%;
+    font-family: 'Muli';
+}
+
+.containerLogin p {
+    font-size: 30px;
+}
+
+.btnLogin {
+    margin: 20px auto;
+    width: 300px;
+}
+
+.btn-dark a {
+    text-decoration: none;
+    color:white;
+}
+
+.containerLoginMedico {
+    font-family: 'Muli';
+}
+
+.containerLoginMedico p {
+    font-size: 40px;
+}
+
+.containerLoginMedico {
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top: 13%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnLoginMedico {
+    width: 300px;
+}
+
+.wrapperCadastro {
+    width: 700px;
+    text-align: center;
+    margin-top: 6%;
+}
+
+.titleCadastro {
+    margin-top: 80px;
+}
+
+.wrapperCadastro .btn-success {
+    width: 670px;
+    color: black;
+    margin-top: 20px;
+}
+
+.wrapperCadastro p {
+    font-size: 30px;
+}
+
+.wrapperCadastro input {
+    margin-bottom: 30px;
+}
+
+.wrapperCadastroPaciente {
+    margin-top: 8%;
+}
+
+textarea {
+    width: 670px;
+    resize: none;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.botaoHistorico {
+    margin-bottom: 2%;
+    text-align: center;
+}
+
+.botaoEnviar {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.btnEnviar {
+    width: 700px;
+    text-align: center;
+}
+.btnHistorico {
+    width: 700px;
+}
+
+.titleMain {
+    text-align: center;
+    margin-top: 14%;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 60px;
+    position: relative;
+}
+
+.titleSecond {
+    position: relative;
+    padding: 10px;
+}
+
+.opcoesRadio {
+    margin: 5px auto;
+    margin-top: 2%;
+    text-align: center;
+}
+.titleSecond {
+    text-align: center;
+}
+
+.containerMedico {
+    margin: 0 auto;
+    margin-top: 7%;
+    padding: 20px;
+    border-radius: 50px;
+    background-color: white;
+    text-align: center;
+}
+
+.select {
+    width: 700px !important;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.containerMain {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.agenda, .consultasMedico {
+    margin-top: 5%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    height: 300px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.consultasMedico:hover {
+    background-color: #ccc;
+}
+
+.agenda:hover {
+    background-color: #ccc;
+}
+
+.agenda button {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.consultasMedico button {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.menu-medico {
+    position: relative;
+    margin-top: 10%;
+    text-align: center;
+    font-family: 'Muli';
+    margin-bottom: 3%;
+}
+
+.wrapperAgenda input {
+    border-radius: 10px;
+    padding: 5px;
+    border: none;
+    background-color: #ccc;
+    width: 80px;
+    overflow: hidden;
+}
+
+
+.wrapperAgenda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.wrapperAgenda button {
+    margin-top: 10%;
+}
+ 
+.wrapperAgenda p {
+    margin: 20px auto;
+}  
+
+.mainMedicoTitle {
+    margin-top: 120px;
+    margin-bottom: -10px;
+}
+
+.inserirData {
+    margin-top: 17% !important;
+    font-family: 'Muli';
+    text-align: center;
+    background-color: white !important;
+    border-radius: 10px;
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.inserirData h2 {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: block;
+    margin-bottom: 30px;
+}
+.inserirData input {
+    width: 100%;
+    padding: 5px;
+    display: block;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin: 0 auto;
+}
+
+.sobreMedico {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    margin-top: 150px !important;
+    width: 100%;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+.sobreMedico h1 {
+    width: 100%;
+}
+
+#rootHorarios {
+    text-align: center;
+    width: 80%;
+    height: 100%;
+    overflow-y: auto;
+    position: relative;
+    margin: 0 auto;
+}
+
+#rootHorarios span {
+    margin: auto 3%;
+    margin-top: 40px;
+    display: inline-block;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.conteudoConsulta {
+    margin-top: 35vh;
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+#rootHistorico, #rootConsultasMedico {
+    margin-top: 100px;
+    overflow-y: scroll;
+    margin-bottom: 100px;
+    height: 100%;
+    padding-bottom: 40px;
+}
+
+#searchWrapper {
+    margin: 0 auto;
+    margin-top: 70px;
+    display: block;
+    text-align: center;
+}
+
+#searchWrapper input {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    width: 70%;
+    padding-left: 30px;
+}
+
+#searchWrapper i {
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 5px;
+
+}
+
+#rootHistoricoMedico {
+    margin-top: 30px;
+    overflow-y: scroll;
+    margin-bottom: 100px;
+    height: 100%;
+    padding-bottom: 40px;
+}
+
+#rootConsultasMedico {
+    margin: 0 auto;
+}
+
+
+#containerReceita {
+    margin: 0 auto;
+    margin-top: 100px;
+    background-color: white;
+    color: black;
+    width: 60%;
+    border-radius: 20px;
+    text-align: center;
+    padding: 20px;
+    vertical-align: center;
+}
+
+#containerReceita textarea {
+    width: 80%;
+}
+/* .wrapper h1 {
+    position: relative;
+    margin-top: 10%;
+    text-align: center;
+    color: white;
+    margin-bottom: -40px;
+} */
+
+.consultaCard {
+    background-color: white;
+    color: black;
+    text-align: center;
+    padding: 20px;
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 60px;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.consultaCard h2 {
+    border: 1px solid black;
+}
+
+.consultaCard h3 {
+    border: 1px solid black;
+}
+
+#rootHorarios span:hover {
+    background-color: #ccc;
+}
+
+.containerMedico h1 {
+    color: black;
+}
+
+#cadastroMedico button {
+    width: 100%;
+}

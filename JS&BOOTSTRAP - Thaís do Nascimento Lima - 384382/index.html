@@ -1,0 +1,173 @@
+<!-- Autora: Thaís do Nascimento Lima - 384382 -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Sistema de Controle de Alunos</title>
+  </head>
+  <body>
+    <div class="container" id="titulo-principal">
+      <h1><strong>Sistema de Controle de Alunos</strong></h1>
+      <span><i class="fas fa-question-circle" data-toggle="modal" data-target="#modalAbout"></i></span>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="card-header header texto">
+            <strong>Formulário de alunos</strong>
+        </div>
+        <form id="form-usuario">
+          <div class="card-body">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <label><strong>Matrícula</strong></label>
+                    <input id="matricula" type="text" class="form-control" placeholder="Adicione a matrícula do aluno" pattern="\d{8}" required/>
+                  </div>
+                  <div class="col-lg-8">
+                    <label><strong>Nome</strong></label>
+                    <input id="nome" type="text" class="form-control" placeholder="Adicione o nome do aluno" pattern="\w{3,}" required/>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                      <label><strong>Data de Nascimento</strong></label>
+                      <input id="data" type="date" class="form-control" min="1925-01-01" max="2001-12-31"/>
+                    </div>
+                    <div class="col-lg-8">
+                      <label><strong>Email</strong></label>
+                      <input id="email" type="email" class="form-control" placeholder="Adicione o email do aluno" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label><strong>DDD</strong></label>
+                      <input id="ddd" type="text" class="form-control" placeholder="DDD" maxlength="2" required/>
+                    </div>
+                    <div class="col-lg-3">
+                      <label><strong>Telefone</strong></label>
+                      <input id="telefone" type="text" class="form-control" placeholder="Adicione o telefone do aluno" maxlength="10" pattern="\d{4}[\-](\d{5}|\d{4})" required/>
+                    </div>
+                    <div class="col-lg-1">
+                        <label><strong>Operadora</strong></label>
+                      <select id="operadoras" class="form-control" required>
+                        <option>Oi</option>
+                        <option>Vivo</option>
+                        <option>Tim</option>
+                        <option>Claro</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                      <label><strong>Campus</strong></label>
+                      <select id="campus" class="form-control" required>
+                          <option>Porangabussu</option>
+                          <option>Pici</option>
+                          <option>Benfica</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-5">
+                      <label><strong>Curso</strong></label>
+                      <select id="curso" class="form-control" required>
+                        <option>Medicina</option>
+                        <option>Odontologia</option>
+                        <option>Farmácia</option>
+                      </select>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" id="enviar" class="btn btn-default border">Enviar</button>
+            <button type="reset" id="limpar" class="btn btn-default border">Limpar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <hr/>
+    <div class="container">
+      <table class="table table-bordered table-striped" id="table-usuarios">
+        <tr>
+          <td>
+            <strong>Matrícula</strong>
+          </td>
+          <td>
+            <strong>Nome</strong>
+          </td>
+          <td>
+            <strong>Ações</strong>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Modal principal -->
+    <div class="modal fade" id="modalRemover" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Solicitação de confirmação</h5>
+          </div>
+          <div class="modal-body">
+            <h3>Confirma exclusão?</h3>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="confirma-remover">Ok</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancela</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal do about -->
+    <div class="modal fade" id="modalAbout" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Sobre a autora</h5>
+          </div>
+          <div class="modal-body">
+            <img class="rounded-circle" id="img-about" src="css/eu.jpg">
+            <p class="float-right" id="texto-about">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer feugiat vitae mauris ac fermentum. <br/>
+            In orci dolor, efficitur a orci eget, molestie blandit tellus. Etiam ac mi diam. Nulla sed semper tortor, vel dictum dolor. </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal de erro de matrícula -->
+    <div class="modal fade" id="modalErro" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Erro</h5>
+          </div>
+          <div class="modal-body">
+            <p>Matrícula já cadastrada no sistema!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="https://kit.fontawesome.com/46a0a8fa44.js"></script>
+  </body>
+</html>

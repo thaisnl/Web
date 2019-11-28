@@ -1,0 +1,312 @@
+<!-- Autora: Thaís do Nascimento Lima - 384382 -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Sistema de Controle de Alunos</title>
+  </head>
+  <body>
+  <div id="app">
+    <div class="container" id="titulo-principal">
+      <h1><strong>Sistema de Controle de Alunos</strong></h1>
+      <span><i class="fas fa-question-circle" data-toggle="modal" data-target="#modalAbout"></i></span>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="card-header header texto">
+            <strong>Formulário de alunos</strong>
+        </div>
+        <form id="form-usuario" v-on:submit.prevent="retornarFuncaoCorreta">
+          <div class="card-body">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <label><strong>Matrícula</strong></label>
+                    <input :disabled="alterar" v-model="matricula" type="text" class="form-control" placeholder="Adicione a matrícula do aluno" pattern="\d{8}" required/>
+                  </div>
+                  <div class="col-lg-8">
+                    <label><strong>Nome</strong></label>
+                    <input v-model="nome" ref="nome" type="text" class="form-control" placeholder="Adicione o nome do aluno" pattern="\w{3,}" required/>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                      <label><strong>Data de Nascimento</strong></label>
+                      <input v-model="data" type="date" class="form-control" min="1925-01-01" max="2001-12-31"/>
+                    </div>
+                    <div class="col-lg-8">
+                      <label><strong>Email</strong></label>
+                      <input v-model="email" type="email" class="form-control" placeholder="Adicione o email do aluno" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label><strong>DDD</strong></label>
+                      <input v-model="ddd" type="text" class="form-control" placeholder="DDD" maxlength="2" required/>
+                    </div>
+                    <div class="col-lg-3">
+                      <label><strong>Telefone</strong></label> 
+                      <input v-on:input="formatarTelefone" v-model="telefone" type="text" class="form-control" placeholder="Adicione o telefone do aluno" maxlength="10" pattern="\d{4}[\-](\d{5}|\d{4})" required/>
+                    </div>
+                    <div class="col-lg-3">
+                        <label><strong>Operadora</strong></label>
+                      <select v-model="operadora" class="form-control" required>
+                        <option selected="selected">Oi</option>
+                        <option>Vivo</option>
+                        <option>Tim</option>
+                        <option>Claro</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                      <label><strong>Campus</strong></label>
+                      <select v-model="campus" class="form-control" required>
+                          <option v-for="(campus, index) in lista">{{index}}</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-7">
+                      <label><strong>Curso</strong></label>
+                      <select v-model="curso" class="form-control" required>
+                        <option v-for="curso in lista[campus]">{{curso}}</option>
+                      </select>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="card-footer">
+            <button v-if="alterar" type="submit" class="btn btn-default border">Alterar</button>
+            <button v-else type="submit" class="btn btn-default border" >Enviar</button>
+            <button id="limpar" class="btn btn-default border" v-on:click="limparCampos">Limpar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <hr/>
+    <table-usuarios :users="usuarios" ref="tabela"></table-usuarios>
+
+    <!-- Modal principal -->
+    <div class="modal fade" id="modalRemover" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Solicitação de confirmação</h5>
+          </div>
+          <div class="modal-body">
+            <h3>Confirma exclusão?</h3>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="confirma-remover" data-dismiss="modal" v-on:click="deletarUsuarioSelecionado()" >Ok</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancela</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal do about -->
+    <div class="modal fade" id="modalAbout" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Sobre a autora</h5>
+          </div>
+          <div class="modal-body">
+            <img class="rounded-circle" id="img-about" src="css/eu.jpg">
+            <p class="float-right" id="texto-about">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer feugiat vitae mauris ac fermentum. <br/>
+            In orci dolor, efficitur a orci eget, molestie blandit tellus. Etiam ac mi diam. Nulla sed semper tortor, vel dictum dolor. </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal de erro de matrícula -->
+    <div class="modal fade" id="modalErro" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Erro</h5>
+          </div>
+          <div class="modal-body">
+            <p>Matrícula já cadastrada no sistema!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <template id="table-usuarios">
+    <div class="container">
+      <table class="table table-bordered table-striped" id="table-usuarios">
+        <thead>
+          <th>
+            <strong>Matrícula</strong>
+          </th>
+          <th>
+            <strong>Nome</strong>
+          </th>
+          <th>
+            <strong>Ações</strong>
+          </th>
+        </thead>
+        <tbody v-if="users.length != 0">
+          <tr v-for="user in users">
+            <td v-on:click="alterarDados()">{{user.matricula}}</td>
+            <td v-on:click="alterarDados()">{{user.nome}}</td>
+            <td><button class="btn btn-danger" data-toggle="modal" data-target="#modalRemover" v-on:click="selecionarUsuarioASerDeletado(user.matricula)">remover</button></td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td colspan="3">Sem alunos cadastrados</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </template>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/46a0a8fa44.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      var usuarioASerDeletado = '';
+      var usuarios = [];
+
+      Vue.component('table-usuarios', {
+        template: "#table-usuarios",
+        props: ['users'],
+        methods: {
+          selecionarUsuarioASerDeletado(userMatricula){
+            usuarioASerDeletado = userMatricula;
+          },
+          alterarDados(){
+            this.$parent.alterar = true;
+          }
+        }
+      });
+
+      var app = new Vue({
+        el: "#app",
+        data: {
+          matricula: '',
+          nome: '',
+          data: '',
+          email: '',
+          ddd: '', 
+          telefone: '',
+          operadora: '',
+          campus: '',
+          curso: '',
+          usuarios: usuarios,
+          lista: {
+            'Porangabussu': ['Medicina', 'Farmácia', 'Odontologia'],
+            'Pici': ['Computação', 'Geologia', 'Geografia'],
+            'Benfica': ['Filosofia', 'Letras', 'Pedagogia']
+          },
+          alterar: false
+        },
+        methods: {
+          adicionarAluno() {
+            let matriculaRepetida = false;
+            for(let i = 0; i<usuarios.length; i++){
+              if(usuarios[i].matricula === this.matricula){
+                matriculaRepetida = true;
+                break;
+              }
+            }
+            if(matriculaRepetida){
+              $('#modalErro').modal('show');
+              this.$refs.nome.focus();
+            }
+            else{
+              usuarios.push({
+                matricula: this.matricula,
+                nome: this.nome,
+                data: this.data,
+                email: this.email,
+                ddd: this.ddd,
+                telefone: this.telefone,
+                operadora: this.operadora,
+                campus: this.campus,
+                curso: this.curso
+              });
+              usuarios.sort((a,b) => (a.matricula < b.matricula) ? -1 : 1);
+            }
+          },
+          deletarUsuarioSelecionado(){
+            let index = 0;
+            for(let i = 0; i<usuarios.length; i++){
+              if(usuarios[i].matricula === usuarioASerDeletado){
+                index = i;
+                break;
+              }
+            }
+            usuarios.splice(index, 1);
+          },
+          formatarTelefone(){
+            let input = this.telefone.replace(/\D/g,'').substring(0,9); 
+            let comeco = input.substring(0,4);
+
+            if(input.length > 7){
+              let fim = input.substring(4,9);
+              this.telefone = `${comeco}` + '-' + `${fim}`;
+            }
+          },
+          setarAlterarFalso(){
+            let index = 0;
+            for(let i = 0; i< usuarios.length; i++){
+              if(usuarios[i].matricula === this.matricula){
+                index = i;
+                break;
+              }
+            }
+            usuarios[index].nome = this.nome;
+            usuarios[index].data = this.data;
+            usuarios[index].email = this.email;
+            usuarios[index].ddd = this.ddd;
+            usuarios[index].telefone = this.telefone;
+            usuarios[index].operadora = this.operadora;
+            usuarios[index].campus = this.campus;
+            usuarios[index].curso = this.curso;
+
+            this.alterar = false;
+          },
+          retornarFuncaoCorreta(){
+            if(this.alterar){
+              return this.setarAlterarFalso();
+            }else{
+              return this.adicionarAluno();
+            }
+          },
+          limparCampos(){
+            this.matricula = '',
+            this.nome = '',
+            this.data = '',
+            this.email = '',
+            this.ddd = '',
+            this.telefone = '',
+            this.operadora = '',
+            this.campus = '',
+            this.curso = ''
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

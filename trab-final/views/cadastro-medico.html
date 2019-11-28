@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Meu médico</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="header">
+                <span class="title">Meu médico</span>
+                <div class="links">
+                    <a href="login.html"><button class="btn btn-outline-info">Entrar</button></a>
+                    <a href="cadastro.html"><button class="btn btn-outline-info">Cadastrar</button></a>
+                </div>
+            </div>
+            <div class="container wrapperCadastro">
+                <p class="titleCadastro"><strong>Cadastro - Médico</strong></p>
+                <form id="cadastroMedico">
+                    <div class="row">
+                        <div class="col sm">
+                            <input id="nome" type="text" class="form-control" placeholder="Nome*" required />
+                        </div>
+                        <div class="col sm">
+                            <input id="cpf" type="text" class="form-control" placeholder="CPF*" maxlength="14" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col sm">
+                            <input id="data" onfocus="(this.type='date')" class="form-control" placeholder="Data de Nascimento*" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col sm">
+                            <input id="especialidade" type="text" class="form-control" placeholder="Especialidade*" required/>
+                        </div>
+                        <div class="col sm">
+                            <input type="text" id="email" class="form-control" placeholder="E-mail*" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col sm">
+                            <input type="password" id="senha" class="form-control" placeholder="Senha*" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col sm">
+                            <input type="text"  id="crm" class="form-control" placeholder="CRM*" required />
+                        </div>
+                        <div class="col sm">
+                            <input type="text"  id="celular" class="form-control" placeholder="Celular*" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col sm">
+                            <textarea class="form-control" placeholder="Descrição*" id="descricao" required></textarea>
+                        </div>
+                    </div>
+                    <div id="warningMessage" style="visibility: hidden; height: 20px;">
+                        <i class="fas fa-exclamation-triangle" style="color: red;"></i>
+                        <span style="color: red;"></span>
+                    </div>
+                    <button type="submit" class="btn btn-success">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </body>
+    <script src="js/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/46a0a8fa44.js" crossorigin="anonymous"></script>
+    <script src="js/cadastro-medico.js"></script>
+</html>

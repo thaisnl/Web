@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Meu médico</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="header">
+                <span class="title">Meu médico</span>
+                <div class="links">
+                    <button class="btn btn-outline-info" id="logout">Logout</a>
+                    <a href="cadastro.html"><button class="btn btn-outline-info">Cadastrar</button></a>
+                </div>
+            </div>
+        <h1 class="titleMain">Agende sua consulta agora</h1>
+        <h3 class="titleSecond">Ou ligue pelo telefone 3232-3232</h3>
+        <div class="row containerMain">
+            <select class="select" id="select">
+                <option value="" selected="selected">Selecione</option>
+            </select>
+        </div> 
+        <div class="row opcoesRadio">
+            <div class="col">
+                <label><input type="radio" name="opcao" value="especialidade"/>Especialidade</label>
+                <label><input type="radio" name="opcao" value="medico"/>Médico</label>
+            </div>
+        </div> 
+        <div class="row botaoEnviar">
+            <div class="col">
+                <button id="btnEnviar" class="btn btn-primary btnEnviar" disabled>Enviar</button>
+            </div>
+        </div>
+        <div class="row botaoHistorico">
+            <div class="col">
+                <a href="historico.html"><button class="btn btn-dark btnHistorico">Histórico de consultas</button></a>
+            </div>
+        </div>
+        <div id="warningMessage" style="visibility: hidden; height: 20px;">
+            <i class="fas fa-exclamation-triangle" style="color: red;"></i>
+            <span style="color: red;"></span>
+        </div>
+    </body>
+    <script src="js/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+    <script src="js/logout.js"></script>
+</html>

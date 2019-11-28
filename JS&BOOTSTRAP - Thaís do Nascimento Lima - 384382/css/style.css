@@ -1,0 +1,37 @@
+.btn-default {
+    background-color: #f5f5f5;
+}
+
+.fa-question-circle {
+    float: right;
+}
+.btn-default:hover {
+    background-color: white;
+}
+
+#titulo-principal {
+    padding: 40px;
+}
+
+#enviar {
+    margin-left: 5px;
+}
+
+.card{
+    border-color: #06c;
+}
+
+.header {
+    background-color:#06c;
+    color: white;
+    font-size: 20px;
+}
+
+#img-about {
+    width: 35%;
+    height: 35%;
+}
+
+#texto-about {
+    width: 60%;
+}

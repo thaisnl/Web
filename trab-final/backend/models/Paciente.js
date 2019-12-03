@@ -9,6 +9,10 @@ const PacienteSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    isVerified: { 
+        type: Boolean, 
+        default: false 
+    },
     dataNascimento: {
         type: String,
         required: true

@@ -13,6 +13,10 @@ const MedicoSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    isVerified: { 
+        type: Boolean, 
+        default: false 
+    },
     especialidade: {
         type: String,
         required: true

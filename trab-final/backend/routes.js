@@ -46,6 +46,8 @@ routes.get('/api/consultas/medico', sessionCheckerMedico, ConsultaController.ret
 routes.put('/api/receita', sessionCheckerMedico, ConsultaController.cadastrarReceita);
 routes.get('/api/logout', logout);
 routes.get('/api/retornarConsulta', sessionCheckerMedico, ConsultaController.retornarDadosConsulta);
+routes.get('/api/confirmationPaciente', PacienteController.confirmationGet);
+routes.get('/api/confirmationMedico', MedicoController.confirmationGet);
 
 
 module.exports = routes;

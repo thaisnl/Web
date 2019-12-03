@@ -1,6 +1,41 @@
 const Medico = require('../models/Medico');
 const { validate } = require('gerador-validador-cpf');
 const emailValidator = require('email-validator');
+const nodemailer = require('nodemailer');
+var crypto = require('crypto');
+const Token = require('../models/TokenMedico');
+
+let mandarEmail = async function (req,res, email,id){
+
+    var token = new Token({ _userId:id, token: crypto.randomBytes(16).toString('hex') });
+
+    token.save();
+    
+
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL || 'pedroln97@gmail.com', 
+            pass: process.env.PASSWORD || 'pandalal11081997'
+        }
+    });
+    let mailOptions = {
+        from: 'pedroln97@gmail.com', 
+        to: email,
+        subject: 'Token para Verificação',
+        text: 'Link para verificação do email: \nhttp:\/\/' + req.headers.host + '\/api/confirmationMedico\/?token=' + token.token + '.\n'
+
+    };
+
+    transporter.sendMail(mailOptions, (err, data) => {
+        if (err) {
+            return log('Error occurs');
+        }
+        return log('Email sent!!!');
+    });
+
+
+}
 
 const postMedico = async (req, res) => {
     let { nome } = req.body;
@@ -44,6 +79,9 @@ const postMedico = async (req, res) => {
         })
 
         await medico.save();
+
+        mandarEmail(req, res, medico.email, medico._id);
+
     }catch(e){
         return res.status(500).send(e.message);
     }
@@ -81,6 +119,9 @@ const loginMedico = async (req, res) => {
         }
         else if(medico.senha != req.body.senha){
             return res.status(400).send("Senha inválida");
+        }
+        else if (medico.isVerified == false){
+            return res.status(400).send("Conta não verificada")
         }
         req.session.email_medico = medico.email;
         console.log(req.session.email_medico);
@@ -124,11 +165,38 @@ let getMedico = async(req, res) => {
     return res.json({medico: medico.nome});
 };
 
+const confirmationGet = function (req, res, next) {
+    // Find a matching token
+    Token.findOne({ token: req.query.token }, function (err, token) {
+        if (!token) return res.status(400).send('Token inválido ou expirado');
+
+        // If we found a token, find a matching user
+    Medico.findOne({ _id: token._userId }, function (err, medico) {
+        if (!medico) 
+            return res.status(400).send('Usuário não encontrado');
+        if (medico.isVerified) 
+            return res.status(400).send('Usuário já foi autenticado!');
+        
+        
+        // Verify and save the user
+        medico.isVerified = true;
+        medico.save(function (err) {
+            if (err) { 
+                return res.status(500).send({ msg: err.message }); 
+            }
+            res.status(200).send("Conta autenticada! Favor logar-se.");
+        });
+        
+    });
+});
+}
+
 module.exports = {
     postMedico,
     getEspecialidades,
     getMedicos,
     agendaMedico,
     loginMedico,
-    getMedico
+    getMedico,
+    confirmationGet
 }

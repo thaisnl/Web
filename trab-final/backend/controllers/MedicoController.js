@@ -29,9 +29,9 @@ let mandarEmail = async function (req,res, email,id){
 
     transporter.sendMail(mailOptions, (err, data) => {
         if (err) {
-            return log('Error occurs');
+            console.log('Error occurs');
         }
-        return log('Email sent!!!');
+        console.log('Email sent!!!');
     });
 
 
@@ -80,7 +80,10 @@ const postMedico = async (req, res) => {
 
         await medico.save();
 
-        // mandarEmail(req, res, medico.email, medico._id);
+        mandarEmail(req, res, medico.email, medico._id);
+
+
+        return res.status(200).json({sucesso: "Um email de verificação foi enviado para seu e-mail"});
 
     }catch(e){
         return res.status(500).send(e.message);
@@ -121,9 +124,9 @@ const loginMedico = async (req, res) => {
             if(medico.senha != req.body.senha){
                 return res.status(404).send("Email ou senha inválidos");
             }
-            // if (medico.isVerified == false){
-            //     return res.status(400).send("Conta não verificada")
-            // }
+            if (medico.isVerified == false){
+                return res.status(400).send("Conta não verificada")
+            }
         }
         req.session.email_medico = medico.email;
         console.log(req.session.email_medico);

@@ -23,10 +23,12 @@ $(document).ready(function(){
             contentType: 'application/json',
             dataType: 'json',
             success: function(msg) {
-                // window.location.href = "main-medico.html";
+                $("#successMessage > span").html("Um email de verificação foi enviado para seu e-mail");
+                $("#successMessage").css('visibility', 'visible');
                 $("#warningMessage").css('visibility', 'hidden');
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
+                $("#successMessage").css('visibility', 'hidden');
                 $("#warningMessage > span").html(XMLHttpRequest.responseText);
                 $("#warningMessage").css('visibility', 'visible');
             }

@@ -21,10 +21,15 @@ $(document).ready(function(){
             contentType: 'application/json',
             dataType: 'json',
             success: function(msg) {
-                // window.location.replace("main-paciente.html");
+                console.log('entrou no success');
+                $("#successMessage > span").html("Um email de verificação foi enviado para seu e-mail");
+                $("#successMessage").css('visibility', 'visible');
                 $("#warningMessage").css('visibility', 'hidden');
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log('entrou  no error');
+                console.log(XMLHttpRequest.responseText);
+                $("#successMessage").css('visibility', 'hidden');
                 $("#warningMessage > span").html(XMLHttpRequest.responseText);
                 $("#warningMessage").css('visibility', 'visible');
             }

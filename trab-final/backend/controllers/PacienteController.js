@@ -29,9 +29,9 @@ let mandarEmail = async function (req,res, email,id){
 
     transporter.sendMail(mailOptions, (err, data) => {
         if (err) {
-            return log('Error occurs');
+            console.log('Error occurs');
         }
-        return log('Email sent!!!');
+        console.log('Email sent!!!');
     });
 
 
@@ -55,9 +55,9 @@ let postPaciente = async function (req, res){
             return res.status(409).send("Paciente já está cadastrado no sistema");
         }
 
-        if(!validate(cpf)){
-            return res.status(400).send("Insira um cpf válido");
-        }
+        // if(!validate(cpf)){
+        //     return res.status(400).send("Insira um cpf válido");
+        // }
 
         if(!emailValidator.validate(email)){
             return res.status(400).send("Insira um email válido");
@@ -77,7 +77,7 @@ let postPaciente = async function (req, res){
 
         mandarEmail(req, res, paciente.email, paciente._id);
 
-        return res.send({paciente: paciente});
+        return res.status(200).json({sucesso: 'Um email de verificação foi enviado para seu e-mail'});
     }catch(e){
         return res.status(500).send("Erro interno no servidor");
     }
@@ -93,9 +93,9 @@ const loginPaciente = async (req, res) => {
             if(paciente.senha != req.body.senha){
                 return res.status(400).send("Senha inválida");
             }
-            // if(paciente.isVerified == false){
-            //     return res.status(400).send("Conta não verificada");
-            // }
+            if(paciente.isVerified == false){
+                return res.status(400).send("Conta não verificada");
+            }
         }
         req.session.email_paciente = paciente.email;
         req.session.email_medico = null;

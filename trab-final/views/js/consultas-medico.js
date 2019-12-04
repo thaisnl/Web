@@ -37,6 +37,7 @@ let marcarConsulta = () => {
             window.location.href = 'main-paciente.html';
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log('entrou aqui');
             if(errorThrown == 'Unauthorized'){
                 window.location.replace('login.html');
             }

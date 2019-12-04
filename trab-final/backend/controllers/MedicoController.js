@@ -80,7 +80,7 @@ const postMedico = async (req, res) => {
 
         await medico.save();
 
-        mandarEmail(req, res, medico.email, medico._id);
+        // mandarEmail(req, res, medico.email, medico._id);
 
     }catch(e){
         return res.status(500).send(e.message);
@@ -115,13 +115,15 @@ const loginMedico = async (req, res) => {
     try{
         let medico = await Medico.findOne({email:req.body.email});
         if(!medico){
-            return res.status(404).send("Email inválido");
+            return res.status(404).send("Email ou senha inválidos");
         }
-        else if(medico.senha != req.body.senha){
-            return res.status(400).send("Senha inválida");
-        }
-        else if (medico.isVerified == false){
-            return res.status(400).send("Conta não verificada")
+        if(medico){
+            if(medico.senha != req.body.senha){
+                return res.status(404).send("Email ou senha inválidos");
+            }
+            // if (medico.isVerified == false){
+            //     return res.status(400).send("Conta não verificada")
+            // }
         }
         req.session.email_medico = medico.email;
         console.log(req.session.email_medico);

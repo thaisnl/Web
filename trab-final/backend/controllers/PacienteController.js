@@ -89,11 +89,13 @@ const loginPaciente = async (req, res) => {
         if(!paciente){
             return res.status(404).send("Email inválido");
         }
-        else if(paciente.senha != req.body.senha){
-            return res.status(400).send("Senha inválida");
-        }
-        else if(paciente.isVerified == false){
-            return res.status(400).send("Conta não verificada");
+        if(paciente){
+            if(paciente.senha != req.body.senha){
+                return res.status(400).send("Senha inválida");
+            }
+            // if(paciente.isVerified == false){
+            //     return res.status(400).send("Conta não verificada");
+            // }
         }
         req.session.email_paciente = paciente.email;
         req.session.email_medico = null;

@@ -2,7 +2,7 @@ const Consulta = require('../models/Consulta');
 const Medico = require('../models/Medico');
 const Paciente = require('../models/Paciente');
 
-const validarData = async(req,res) => {
+let validarData = async(req,res) => {
     let { data } = req.body;
     let medicoId = req.query['crm'];
     let medicoNome = req.query['medico'];
@@ -17,18 +17,25 @@ const validarData = async(req,res) => {
     return res.json({data: data});
 }
 
-const retornarHorarios = async(req, res) => {
-    let crmMedico = req.query['crm'];
+let retornarHorarios = async(req, res) => {
+    let crm = req.query['crm'];
     let data = req.query['data'];
 
     let horarios = [];
-    let medico = await Medico.findOne({crm: crmMedico});
-    let consultasDoMedico = await Consulta.find({medico: medico._id});
-    consultasDoMedico = consultasDoMedico.filter((el) => (el == el));
-
+    let medico = await Medico.findOne({crm});
+    
     if(new Date(data).getDay() == 0){
         return res.status(400).send("Não há nenhum médico disponível nesta data");
     }
+    horarios = await retornarHorariosAuxiliar(medico, data);
+    
+    res.json({descricao: medico.descricao, medico: medico.nome, horarios});
+}
+
+let retornarHorariosAuxiliar = async (medico, data) => {
+    let horarios = [];
+    let consultasDoMedico = await Consulta.find({medico: medico._id});
+    consultasDoMedico = consultasDoMedico.filter((el) => (el == el));
 
     let horarioAtual = new Date(data + ' 00:00');
     let comecoTurnoMedico = medico.comecoturno1;
@@ -64,55 +71,21 @@ const retornarHorarios = async(req, res) => {
         horarioAtual.setTime(horarioAtual.getTime() + (15 * 60 * 1000));
     }
 
-    res.json({descricao: medico.descricao, medico: medico.nome, horarios});
+    return horarios;
 }
 
-const retornarHorarios2 = async(req, res) => {
+let retornarHorarios2 = async(req, res) => {
     let nomeMedico = req.query['medico'];
     let data = req.query['data'];
 
     let horarios = [];
     let medico = await Medico.findOne({nome: nomeMedico});
-    let consultasDoMedico = await Consulta.find({medico: medico._id});
-    consultasDoMedico = consultasDoMedico.filter((el) => (el == el));
-
+    
     if(new Date(data).getDay() == 0){
         return res.status(400).send("Não há nenhum médico disponível nesta data");
     }
-
-    let horarioAtual = new Date(data + ' 00:00');
-    let comecoTurnoMedico = medico.comecoturno1;
-    horarioAtual.setHours(comecoTurnoMedico.getHours(), comecoTurnoMedico.getMinutes());
-
-    while((horarioAtual.getHours() != medico.fimturno1.getHours()) ||
-        (horarioAtual.getMinutes() != medico.fimturno1.getMinutes())){
-        let contem = false;
-        consultasDoMedico.forEach(function(i){
-            if(i.data.getTime() == horarioAtual.getTime()){
-                contem = true;
-            }
-        })
-        if(!contem){
-            horarios.push(horarioAtual.getTime())
-        }
-        horarioAtual.setTime(horarioAtual.getTime() + (15 * 60 * 1000));
-    };
-
-    comecoTurnoMedico = medico.comecoturno2;
-    horarioAtual.setHours(comecoTurnoMedico.getHours(), comecoTurnoMedico.getMinutes());
-    while((horarioAtual.getHours() != medico.fimturno2.getHours()) ||
-        (horarioAtual.getMinutes() != medico.fimturno2.getMinutes())){
-        let contem = false;
-        consultasDoMedico.forEach(function(i){
-            if(i.data.getTime() == horarioAtual.getTime()){
-                contem = true;
-            }
-        })
-        if(!contem){
-            horarios.push(horarioAtual.getTime())
-        }
-        horarioAtual.setTime(horarioAtual.getTime() + (15 * 60 * 1000));
-    }
+   
+    horarios = await retornarHorariosAuxiliar(medico, data);
 
     res.json({descricao: medico.descricao, medico: medico.nome, horarios});
 }
@@ -120,13 +93,7 @@ const retornarHorarios2 = async(req, res) => {
 let marcarConsulta = async (req, res) => {
     let { horario } = req.body;
     let { data } = req.body;
-    console.log('a data sem formatação é: ' + data);
-    data = new Date(data + ' 00:00');
-    let date = new Date();
-    date.setTime(horario);
-    data.setHours(date.getHours(), date.getMinutes());
-    console.log(data);
-    console.log(' a data é:' + data);
+
     let { crm } = req.body;
     try{
         let medico = await Medico.findOne({crm});
@@ -137,15 +104,7 @@ let marcarConsulta = async (req, res) => {
             return res.status(409).send("Horário não disponível");
         }
 
-        let paciente = await Paciente.findOne({email: req.session.email_paciente});
-
-        let c = new Consulta({
-            medico: medico._id,
-            paciente: paciente._id,
-            data
-        })
-
-        await c.save();
+        let c = await marcarConsultaAuxiliar(medico, data, horario, req.session.email_paciente);
 
         return res.json({consulta: c});
     }catch(e){
@@ -153,14 +112,33 @@ let marcarConsulta = async (req, res) => {
     }
 }
 
+let marcarConsultaAuxiliar = async(medico, data, horario, email_paciente) => {
+    data = new Date(data + ' 00:00');
+
+    let date = new Date();
+    date.setTime(horario);
+
+    data.setHours(date.getHours(), date.getMinutes());
+
+    let paciente = await Paciente.findOne({email: email_paciente});
+
+    let c = new Consulta({
+        medico: medico._id,
+        paciente: paciente._id,
+        data
+    })
+
+    await c.save();
+
+    return c;
+};
+
 let marcarConsulta2 = async (req, res) => {
     let { horario } = req.body;
     let { data } = req.body;
-    data = new Date(data + ' 00:00');
-    let date = new Date();
-    date.setTime(horario);
-    data.setHours(date.getHours(), date.getMinutes());
+
     let nome = req.body.medico;
+
     try{
         let medico = await Medico.findOne({nome});
 
@@ -170,19 +148,11 @@ let marcarConsulta2 = async (req, res) => {
             return res.status(409).send("Horário não disponível");
         }
 
-        let paciente = await Paciente.findOne({email: req.session.email_paciente});
-
-        let c = new Consulta({
-            medico: medico._id,
-            paciente: paciente._id,
-            data
-        })
-
-        await c.save();
+        let c = await marcarConsultaAuxiliar(medico, data, horario, req.session.email_paciente);
 
         return res.json({consulta: c});
     }catch(e){
-        return res.status(500).send('Erro interno no servidor');
+        return res.status(500).send(e.message);
     }
 }
 

@@ -24,7 +24,7 @@ $(document).ready(function(){
 let preencherComConsultas = (msg) => {
     for(let i = 0; i<msg.consultas.length; i++){
         let conteudo = '<div class="consultaCard">'+
-                            '<h2>Consulta dia ' +formatarData(msg.consultas[i]) + '</h2>' +
+                            '<h2>Consulta dia ' +formatarData(msg.consultas[i]) + ', ' + formatarHorario(msg.consultas[i]) +'</h2>' +
                             '<h3>Médico: ' +  msg.medicos[i] + '</h3>' +
                             '<p>Diagnóstico: ' +formatarDiagnostico(msg.consultas[i]) + '</p>' +
                             '<p>Receita: ' + formatarReceita(msg.consultas[i]) + '</p>' +
@@ -58,4 +58,14 @@ let formatarDiagnostico = (consulta) => {
     }else{
         return consulta.diagnostico;
     }
+}
+
+
+let formatarHorario = (consulta) => {
+    let date = new Date(consulta.data);
+    let minutos = date.getUTCMinutes();
+    if(minutos < 10){
+        minutos = minutos + '0';
+    }
+    return date.getUTCHours() + ':' + minutos;
 }

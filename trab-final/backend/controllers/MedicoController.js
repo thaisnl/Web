@@ -23,7 +23,7 @@ let mandarEmail = async function (req,res, email,id){
         from: 'pedroln97@gmail.com', 
         to: email,
         subject: 'Token para Verificação',
-        text: 'Link para verificação do email: \nhttp:\/\/' + req.headers.host + '\/api/confirmationMedico\/?token=' + token.token + '.\n'
+        text: 'Link para verificação do email: \nhttp:\/\/' + req.headers.host + '\/api/confirmationMedico?token=' + token.token + '.\n'
 
     };
 

@@ -23,7 +23,7 @@ $(document).ready(function(){
             contentType: 'application/json',
             dataType: 'json',
             success: function(msg) {
-                window.location.href = "main-medico.html";
+                // window.location.href = "main-medico.html";
                 $("#warningMessage").css('visibility', 'hidden');
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {

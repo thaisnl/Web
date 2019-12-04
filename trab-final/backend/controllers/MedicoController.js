@@ -15,8 +15,8 @@ let mandarEmail = async function (req,res, email,id){
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.EMAIL || 'pedroln97@gmail.com', 
-            pass: process.env.PASSWORD || 'pandalal11081997'
+            user: process.env.EMAIL || 'meumedicoauthentication@gmail.com', 
+            pass: process.env.PASSWORD || 'Medauth123'
         }
     });
     let mailOptions = {

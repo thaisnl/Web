@@ -41,8 +41,8 @@ let retornarHorariosAuxiliar = async (medico, data) => {
     let comecoTurnoMedico = medico.comecoturno1;
     horarioAtual.setHours(comecoTurnoMedico.getHours(), comecoTurnoMedico.getMinutes());
 
-    while((horarioAtual.getHours() != medico.fimturno1.getHours()) ||
-        (horarioAtual.getMinutes() != medico.fimturno1.getMinutes())){
+    while((horarioAtual.getHours() < medico.fimturno1.getHours()) ||
+        (horarioAtual.getMinutes() < medico.fimturno1.getMinutes())){
         let contem = false;
         consultasDoMedico.forEach(function(i){
             if(i.data.getTime() == horarioAtual.getTime()){
@@ -57,8 +57,8 @@ let retornarHorariosAuxiliar = async (medico, data) => {
 
     comecoTurnoMedico = medico.comecoturno2;
     horarioAtual.setHours(comecoTurnoMedico.getHours(), comecoTurnoMedico.getMinutes());
-    while((horarioAtual.getHours() != medico.fimturno2.getHours()) ||
-        (horarioAtual.getMinutes() != medico.fimturno2.getMinutes())){
+    while((horarioAtual.getHours() < medico.fimturno2.getHours()) ||
+        (horarioAtual.getMinutes() < medico.fimturno2.getMinutes())){
         let contem = false;
         consultasDoMedico.forEach(function(i){
             if(i.data.getTime() == horarioAtual.getTime()){
@@ -180,6 +180,7 @@ let retornarConsultasMedico = async(req, res) => {
 
     for(let i = 0; i<consultas.length; i++){
         let paciente = await Paciente.findOne({_id: consultas[i].paciente});
+        console.log('consulta: ' + consultas[i].data);
         pacientes.push(paciente.nome);
     }
 

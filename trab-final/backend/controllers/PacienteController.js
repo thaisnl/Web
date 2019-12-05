@@ -20,7 +20,7 @@ let mandarEmail = async function (req,res, email,id){
         }
     });
     let mailOptions = {
-        from: 'pedroln97@gmail.com', 
+        from: 'meumedicoauthentication@gmail.com', 
         to: email,
         subject: 'Token para Verificação',
         text: 'Link para verificação do email: \nhttp:\/\/' + req.headers.host + '\/api/confirmationPaciente?token=' + token.token + '.\n'
@@ -40,7 +40,7 @@ let mandarEmail = async function (req,res, email,id){
 let postPaciente = async function (req, res){
     let { nome } = req.body;
     let { cpf } = req.body;
-    let { data} = req.body;
+    let { data } = req.body;
     let { telefone } = req.body;
     let { celular } = req.body;
     let { email } = req.body;
@@ -55,9 +55,9 @@ let postPaciente = async function (req, res){
             return res.status(409).send("Paciente já está cadastrado no sistema");
         }
 
-        // if(!validate(cpf)){
-        //     return res.status(400).send("Insira um cpf válido");
-        // }
+        if(!validate(cpf)){
+            return res.status(400).send("Insira um cpf válido");
+        }
 
         if(!emailValidator.validate(email)){
             return res.status(400).send("Insira um email válido");

@@ -20,7 +20,7 @@ let mandarEmail = async function (req,res, email,id){
         }
     });
     let mailOptions = {
-        from: 'pedroln97@gmail.com', 
+        from: 'meumedicoauthentication@gmail.com', 
         to: email,
         subject: 'Token para Verificação',
         text: 'Link para verificação do email: \nhttp:\/\/' + req.headers.host + '\/api/confirmationMedico?token=' + token.token + '.\n'
